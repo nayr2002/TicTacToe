@@ -21,7 +21,7 @@ public class Runner {
 
         if (!humanFirst) {
             while (!valid) {
-                cMove = c.determineMove();
+                cMove = c.determineMove(-1);
                 valid = b.checkValid(cMove);
             }
 
@@ -50,7 +50,7 @@ public class Runner {
             }
 
             while (!valid) {
-                cMove = c.determineMove();
+                cMove = c.determineMove(b.getdefense());
                 valid = b.checkValid(cMove);
             }
 
