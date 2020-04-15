@@ -9,7 +9,7 @@ public class Computer extends Player {
         if(move != -1){
             return move+1;
         } else {
-            int position = (int)((Math.random()* 8) + 1);
+            int position = (int)(Math.random() * 9) + 1;
 
             return position;
         }

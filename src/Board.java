@@ -1,8 +1,7 @@
 public class Board {
     int size = 9;
     String[] grid = new String[size];
-    //constructor initializes the whole
-    // grid with 0's when created
+
     public Board() {
          for(int i = 0; i < size; i++){
              grid[i] = String.valueOf(i + 1);
@@ -48,69 +47,79 @@ public class Board {
         //check rows
         for(int i = 0; i < Math.sqrt(size); i++){
             if (grid[i*3].equals(grid[(i*3)+1]) && grid[(i*3)+1].equals(grid[(i*3)+2])) {
-                return false;
+                return true;
             }
         }
         //check columns
         for(int i = 0; i < Math.sqrt(size); i++){
             if (grid[i].equals(grid[i+3]) && grid[i+3].equals(grid[i+6])) {
-                return false;
+                return true;
             }
         }
         //check diagonals
         if (grid[0].equals(grid[4]) && grid[4].equals(grid[8])) {
-            return false;
+            return true;
         }
         if (grid[2].equals(grid[4]) && grid[4].equals(grid[6])) {
-            return false;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkcats(){
+        //check cat's game
+        for(int i = 0; i < size; i++){
+            if(!grid[i].equals("X") && !grid[i].equals("O")){
+                return false;
+            }
         }
         return true;
     }
 
     public int getdefense(){
+        //check diagonal 1
+        if (grid[0].equals("X") && grid[4].equals("X") && !grid[8].equals("X") && !grid[8].equals("O")) {
+            return 8;
+        }
+        if (grid[0].equals("X") && !grid[4].equals("X") && !grid[4].equals("O") && grid[8].equals("X")) {
+            return 4;
+        }
+        if (!grid[0].equals("X") && !grid[0].equals("O") && grid[4].equals("X") && grid[8].equals("X")) {
+            return 0;
+        }
+        //check diagonal 2
+        if (grid[2].equals("X") && grid[4].equals("X") && !grid[6].equals("X") && !grid[6].equals("O")) {
+            return 6;
+        }
+        if (grid[2].equals("X") && !grid[4].equals("X") && !grid[4].equals("O") && grid[6].equals("X")) {
+            return 4;
+        }
+        if (!grid[2].equals("X") && !grid[2].equals("O") && grid[4].equals("X") && grid[6].equals("X")) {
+            return 2;
+        }
+        //check rows
         for(int i = 0; i < Math.sqrt(size); i++){
-            //check rows
             if (grid[i*3].equals("X") && grid[(i*3)+1].equals("X") && !grid[(i*3)+2].equals("X") && !grid[(i*3)+2].equals("O")) {
                 return (i*3)+2;
             }
-            if (grid[i*3].equals("X") && !grid[(i*3)+1].equals("X") && grid[(i*3)+2].equals("X")) {
+            if (grid[i*3].equals("X") && !grid[(i*3)+1].equals("X") && !grid[(i*3)+1].equals("O") && grid[(i*3)+2].equals("X")) {
                 return (i*3)+1;
             }
-            if (!grid[i*3].equals("X") && grid[(i*3)+1].equals("X") && grid[(i*3)+2].equals("X")) {
+            if (!grid[i*3].equals("X") && !grid[i*3].equals("O") && grid[(i*3)+1].equals("X") && grid[(i*3)+2].equals("X")) {
                 return i*3;
             }
         }
         //check columns
         for(int i = 0; i < Math.sqrt(size); i++){
-            if (grid[i] == "X" && grid[i+3] == "X" && grid[i+6] != "X") {
+            if (grid[i].equals("X") && grid[i + 3].equals("X") && !grid[i + 6].equals("X") && !grid[i + 6].equals("O")) {
                 return i+6;
             }
-            if (grid[i] == "X" && grid[i+3] != "X" && grid[i+6] == "X") {
+            if (grid[i].equals("X") && !grid[i + 3].equals("X") && !grid[i + 3].equals("O") && grid[i + 6].equals("X")) {
                 return i+3;
             }
-            if (grid[i] != "X" && grid[i+3] == "X" && grid[i+6] == "X") {
+            if (!grid[i].equals("X") && !grid[i].equals("O") && grid[i + 3].equals("X") && grid[i + 6].equals("X")) {
                 return i;
             }
-        }
-        //check diagonal 1
-        if (grid[0] == "X" && grid[4] == "X" && grid[8] != "X") {
-            return 8;
-        }
-        if (grid[0] == "X" && grid[4] != "X" && grid[8] == "X") {
-            return 4;
-        }
-        if (grid[0] != "X" && grid[4] == "X" && grid[8] == "X") {
-            return 0;
-        }
-        //check diagonal 2
-        if (grid[0] == "X" && grid[4] == "X" && grid[6] != "X") {
-            return 6;
-        }
-        if (grid[0] == "X" && grid[4] != "X" && grid[6] == "X") {
-            return 4;
-        }
-        if (grid[0] != "X" && grid[4] == "X" && grid[6] == "X") {
-            return 0;
         }
         //else
         return -1;

@@ -33,7 +33,7 @@ public class Runner {
             b.printBoard();
         }
 
-        while (b.checkwin()) {
+        while (!b.checkwin()) {
             while (!valid) {
                 System.out.print("Move: ");
                 hMove = sc.nextInt();
@@ -43,13 +43,19 @@ public class Runner {
             b.setToken(hMove, h.token);
             valid = false;
 
-            if(!b.checkwin()){
+            if(b.checkwin()){
                 b.printBoard();
-                System.out.println(h.name + " wins!!!");
+                System.out.println(c.name + " wins!!!");
                 return;
             }
 
-            while (!valid) {
+            if(b.checkcats()){
+                b.printBoard();
+                System.out.println("Cat's Game!!!");
+                return;
+            }
+
+        while (!valid) {
                 cMove = c.determineMove(b.getdefense());
                 valid = b.checkValid(cMove);
             }
@@ -59,8 +65,13 @@ public class Runner {
 
             b.printBoard();
 
-            if(!b.checkwin()){
+            if(b.checkwin()){
                 System.out.println(c.name + " wins!!!");
+                return;
+            }
+
+            if(b.checkcats()){
+                System.out.println("Cat's Game!!!");
             }
         }
     }
